@@ -2,8 +2,31 @@ const express = require('express');
 const router = express.Router();
 const todoService = require('../services/todo');
 const Todo = require('../models/todoSchema');
+const { ObjectID } = require('mongodb');
 
 router.get('/', (req, res) => {
+    
+});
+
+router.get('/:id', (req, res, next) => {
+    const id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        res.sendStatus(404).send('Invalid Id');
+    }
+
+    Todo.findById(id)
+        .then(todo => {
+            if(todo) {
+                res.send({ todo });
+            }
+            res.sendStatus(404).send({ todo });
+        },err => res.sendStatus(404).send(err));
+});
+
+router.patch('/', (req, res) => {
+    let updateTodo = new Todo(req.body);
+
+
     
 });
 
@@ -17,7 +40,7 @@ router.post('/', (req, res) => {
     newTodo.save().then(doc => {
        res.send(doc);
     }, err => {
-       res.status(400).send(err);
+       return new handleError(err);
     });
 
 });
