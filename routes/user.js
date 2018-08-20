@@ -36,6 +36,7 @@ router.post('/', (req, res) => {
     //    res.send(doc);
         return newUser.generateAuthToken();
     }).then(token => {
+        newUser = _.pick(newUser, ['email', '_id']);
         res.header('x-auth', token).send(newUser);
     }).catch(err => res.status(400).send(err));
 
