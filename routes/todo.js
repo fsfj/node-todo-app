@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const todoService = require('../services/todo');
 const Todo = require('../models/todoSchema');
 const { ObjectID } = require('mongodb');
 
 router.get('/', (req, res) => {
-    
+    res.send('todo route works!');
 });
 
 router.get('/:id', (req, res, next) => {
@@ -25,9 +24,6 @@ router.get('/:id', (req, res, next) => {
 
 router.patch('/', (req, res) => {
     let updateTodo = new Todo(req.body);
-
-
-    
 });
 
 router.post('/', (req, res) => {
