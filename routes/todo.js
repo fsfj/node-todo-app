@@ -9,10 +9,16 @@ router.get('/', (req, res) => {
     // res.send('todo route works!');
 
     // res
-    Todo.find({}).then(todos => {
+    Todo.find({ completed: false }).then(todos => {
         res.json(todos);
     }).catch(err => res.status(400).send());
 });
+
+router.get('/done', (req, res) => {
+    Todo.find({ completed: true }).then(todos => {
+        res.json(todos);
+    }).catch(err => res.status(400).send());
+})
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
